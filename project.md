@@ -20,11 +20,11 @@ The initial baseline is intentionally small and is built around:
 
 Project phase: initial Electron boilerplate.
 
-Repository: \`solis-syst/solis-appv2\`
+Repository: `solis-syst/solis-appv2`
 
-Default branch: \`main\`
+Default branch: `main`
 
-Initial application version: \`1.0.0\`
+Initial application version: `1.0.0`
 
 Distribution targets:
 
@@ -35,55 +35,55 @@ Distribution targets:
 Update provider:
 
 - GitHub Releases
-- owner: \`solis-syst\`
-- repository: \`solis-appv2\`
-- provider: \`github\`
+- owner: `solis-syst`
+- repository: `solis-appv2`
+- provider: `github`
 
 ## Architecture
 
 ### Main process
 
-\`main.js\`
+`main.js`
 
 Responsibilities:
 
 - Create the Electron window.
-- Enforce \`contextIsolation: true\`.
-- Enforce \`nodeIntegration: false\`.
+- Enforce `contextIsolation: true`.
+- Enforce `nodeIntegration: false`.
 - Use Electron sandboxing for the renderer.
 - Load the Vite development URL in development.
-- Load \`dist/renderer/index.html\` in production.
+- Load `dist/renderer/index.html` in production.
 - Register updater events.
-- Invoke \`autoUpdater.checkForUpdates()\`.
+- Invoke `autoUpdater.checkForUpdates()`.
 - Download updates only after renderer action.
-- Install downloaded updates through \`quitAndInstall()\`.
-- Relay updater events through a single \`updater:event\` IPC channel.
+- Install downloaded updates through `quitAndInstall()`.
+- Relay updater events through a single `updater:event` IPC channel.
 - Expose version and development-mode IPC handlers.
 - Provide development-only mock updater events.
 
 ### Preload
 
-\`preload.js\`
+`preload.js`
 
-Only exposes a narrow API through \`contextBridge\`:
+Only exposes a narrow API through `contextBridge`:
 
-- \`app.getVersion()\`
-- \`app.isDevelopment()\`
-- \`updater.check()\`
-- \`updater.download()\`
-- \`updater.install()\`
-- \`updater.onEvent(callback)\`
-- \`updater.mock(type, data)\`
+- `app.getVersion()`
+- `app.isDevelopment()`
+- `updater.check()`
+- `updater.download()`
+- `updater.install()`
+- `updater.onEvent(callback)`
+- `updater.mock(type, data)`
 
-Do not expose \`ipcRenderer\`, \`process\`, \`require\`, filesystem APIs, or arbitrary IPC channels to the renderer.
+Do not expose `ipcRenderer`, `process`, `require`, filesystem APIs, or arbitrary IPC channels to the renderer.
 
 ### Renderer
 
-\`src/App.jsx\`
+`src/App.jsx`
 
 Owns the current updater state.
 
-\`src/components/UpdaterCard.jsx\`
+`src/components/UpdaterCard.jsx`
 
 Renders the Update Center.
 
@@ -100,7 +100,7 @@ Updater states:
 
 ### Styling
 
-\`src/index.css\`
+`src/index.css`
 
 Uses Tailwind CSS v4 with a restrained zinc-based palette. The active update accent is emerald. Avoid gradients, glassmorphism, excessive rounded pills, decorative glows, and unnecessary visual noise.
 
@@ -119,16 +119,16 @@ In packaged builds:
 
 1. Electron starts.
 2. The main process creates the window.
-3. After a short delay, \`autoUpdater.checkForUpdates()\` runs.
+3. After a short delay, `autoUpdater.checkForUpdates()` runs.
 4. The main process receives the updater result.
-5. The main process relays it through \`updater:event\`.
+5. The main process relays it through `updater:event`.
 6. React updates the Update Center.
 
 ### Manual check
 
 Renderer -> preload -> main:
 
-\`updater.check()\`
+`updater.check()`
 
 In development this does not contact GitHub. It emits a development state instead.
 
@@ -136,39 +136,39 @@ In development this does not contact GitHub. It emits a development state instea
 
 The renderer requests:
 
-\`updater.download()\`
+`updater.download()`
 
 The main process calls:
 
-\`autoUpdater.downloadUpdate()\`
+`autoUpdater.downloadUpdate()`
 
 Progress is relayed continuously through:
 
-\`download-progress\`
+`download-progress`
 
 ### Apply
 
-After \`update-downloaded\`, the renderer exposes:
+After `update-downloaded`, the renderer exposes:
 
-\`Restart to apply\`
+`Restart to apply`
 
-That invokes \`updater.install()\`, which calls:
+That invokes `updater.install()`, which calls:
 
-\`autoUpdater.quitAndInstall(false, true)\`
+`autoUpdater.quitAndInstall(false, true)`
 
 ## Release Pipeline
 
 The workflow is:
 
-\`.github/workflows/release.yml\`
+`.github/workflows/release.yml`
 
 Trigger:
 
-\`v*.*.*\`
+`v*.*.*`
 
 Example:
 
-\`v1.0.0\`
+`v1.0.0`
 
 Each tag build runs on:
 
@@ -178,37 +178,37 @@ Each tag build runs on:
 
 GitHub Actions uses:
 
-\`GH_TOKEN=\${{ secrets.GITHUB_TOKEN }}\`
+`GH_TOKEN=${{ secrets.GITHUB_TOKEN }}`
 
 The workflow runs:
 
-\`npm install --no-audit --no-fund\`
+`npm install --no-audit --no-fund`
 
 then:
 
-\`npm run release\`
+`npm run release`
 
 electron-builder publishes the generated platform installers and updater metadata to the GitHub Release.
 
 ### Required release versioning
 
-Before tagging a release, \`package.json\` must contain the same semantic version as the tag without the leading \`v\`.
+Before tagging a release, `package.json` must contain the same semantic version as the tag without the leading `v`.
 
 Example:
 
-\`package.json\` -> \`1.0.1\`
+`package.json` -> `1.0.1`
 
 Git tag:
 
-\`v1.0.1\`
+`v1.0.1`
 
-Do not create a \`v1.0.1\` tag while \`package.json\` still says \`1.0.0\`.
+Do not create a `v1.0.1` tag while `package.json` still says `1.0.0`.
 
 ## Update Metadata
 
 electron-builder generates platform-specific updater metadata as part of publishing.
 
-For Windows NSIS, the release must contain \`latest.yml\` alongside the installer artifacts.
+For Windows NSIS, the release must contain `latest.yml` alongside the installer artifacts.
 
 For macOS, the relevant metadata is generated for the configured macOS targets.
 
@@ -220,19 +220,19 @@ Never manually create updater metadata unless there is a specific verified reaso
 
 Install dependencies:
 
-\`npm install\`
+`npm install`
 
 Run the desktop app with Vite:
 
-\`npm run dev\`
+`npm run dev`
 
 Run the packaged entry directly:
 
-\`npm start\`
+`npm start`
 
 The development script starts Vite first, waits for port 5173, then launches Electron with:
 
-\`VITE_DEV_SERVER_URL=http://127.0.0.1:5173\`
+`VITE_DEV_SERVER_URL=http://127.0.0.1:5173`
 
 ## Local Updater Simulation
 
@@ -248,7 +248,7 @@ Use the Update Center's "Development state simulation" controls to exercise:
 
 The preload API also supports:
 
-\`window.electronAPI.updater.mock(type, data)\`
+`window.electronAPI.updater.mock(type, data)`
 
 Production builds reject mock events.
 
@@ -256,28 +256,28 @@ Production builds reject mock events.
 
 ### Release 1.0.0
 
-1. Set \`package.json\` to \`1.0.0\`.
+1. Set `package.json` to `1.0.0`.
 2. Commit the change.
-3. Create and push tag \`v1.0.0\`.
+3. Create and push tag `v1.0.0`.
 4. Wait for the three GitHub Actions matrix jobs.
 5. Confirm the GitHub Release contains the platform installers and generated updater metadata.
 6. Install the Windows NSIS build for the Windows update test.
 
 ### Release 1.0.1
 
-1. Change \`package.json\` from \`1.0.0\` to \`1.0.1\`.
+1. Change `package.json` from `1.0.0` to `1.0.1`.
 2. Commit the change.
-3. Create and push tag \`v1.0.1\`.
+3. Create and push tag `v1.0.1`.
 4. Wait for the GitHub Actions release workflow.
-5. Confirm the \`v1.0.1\` GitHub Release is published and contains \`latest.yml\` plus the Windows installer.
-6. Launch the installed \`1.0.0\` application.
+5. Confirm the `v1.0.1` GitHub Release is published and contains `latest.yml` plus the Windows installer.
+6. Launch the installed `1.0.0` application.
 7. Let startup checking run or press "Check for updates".
 8. The UI should move from checking -> update available.
 9. Press "Download update".
 10. Verify progress events update the percentage, transferred size, total size, and MB/s rate.
 11. When download completes, verify the UI changes to "Ready to restart".
 12. Press "Restart to apply".
-13. After restart, verify the application version is \`1.0.1\`.
+13. After restart, verify the application version is `1.0.1`.
 
 ## Important Platform Constraint
 
@@ -289,10 +289,10 @@ Do not add signing secrets or certificates to this repository. Configure them th
 
 Keep these invariants intact:
 
-- \`contextIsolation: true\`
-- \`nodeIntegration: false\`
-- \`sandbox: true\`
-- No raw \`ipcRenderer\` exposed to React.
+- `contextIsolation: true`
+- `nodeIntegration: false`
+- `sandbox: true`
+- No raw `ipcRenderer` exposed to React.
 - No Node.js filesystem access exposed to React.
 - No arbitrary IPC channel names supplied by renderer input.
 - Mock updater events remain development-only.
