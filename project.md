@@ -162,15 +162,23 @@ The workflow is:
 
 `.github/workflows/release.yml`
 
-Trigger:
+Automatic trigger:
 
-`v*.*.*`
+`push.tags: v*.*.*`
+
+Manual trigger:
+
+`workflow_dispatch`
+
+The manual workflow exposes a required `tag` input in the GitHub Actions UI.
 
 Example:
 
 `v1.0.0`
 
-Each tag build runs on:
+The manually selected tag is checked out directly before building.
+
+Each release build runs on:
 
 - windows-latest
 - macos-latest
@@ -203,6 +211,18 @@ Git tag:
 `v1.0.1`
 
 Do not create a `v1.0.1` tag while `package.json` still says `1.0.0`.
+
+### Manual release procedure
+
+1. Open the repository's **Actions** tab.
+2. Select **Release**.
+3. Select **Run workflow**.
+4. Enter an existing tag such as `v1.0.0`.
+5. Start the workflow.
+6. The matrix builds Windows, macOS, and Linux from that exact tag.
+7. The existing `GITHUB_TOKEN` publishes the build artifacts to the corresponding GitHub Release.
+
+The manual tag input is validated against the `vMAJOR.MINOR.PATCH` format before the build starts.
 
 ## Update Metadata
 
@@ -349,6 +369,7 @@ Never treat old assumptions from a previous conversation as more authoritative t
 - Added electron-builder GitHub publishing configuration.
 - Added Windows NSIS, macOS DMG/ZIP, and Linux AppImage targets.
 - Added tag-triggered GitHub Actions release matrix.
+- Added manual workflow dispatch with tag input and exact-tag checkout.
 - Added this project context file for future AI sessions.
 
 ## Known Limitations
