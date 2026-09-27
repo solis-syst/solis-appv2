@@ -9,27 +9,27 @@ Solis AppV2 is a minimal Electron desktop application foundation with a React + 
 
 ## Development
 
-\`\`\`bash
+```bash
 npm install
 npm run dev
-\`\`\`
+```
 
 ## Production build
 
-\`\`\`bash
+```bash
 npm run build
-\`\`\`
+```
 
-Build output is written to \`release/\`.
+Build output is written to `release/`.
 
 ## Releases
 
-Update the version in \`package.json\`, commit it, and push a semantic version tag:
+Update the version in `package.json`, commit it, and push a semantic version tag:
 
-\`\`\`bash
+```bash
 git tag v1.0.0
 git push origin v1.0.0
-\`\`\`
+```
 
 GitHub Actions builds Windows, macOS, and Linux artifacts and publishes them to the GitHub Release.
 
