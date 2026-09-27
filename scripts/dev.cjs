@@ -7,7 +7,7 @@ const viteEntry = require.resolve("vite/bin/vite.js");
 const electronPath = require("electron");
 
 const port = 5173;
-const url = \`http://127.0.0.1:\${port}\`;
+const url = `http://127.0.0.1:${port}`;
 
 const waitForServer = () =>
   new Promise((resolve, reject) => {
@@ -84,7 +84,7 @@ waitForServer()
   })
   .catch((error) => {
     cleanup();
-    process.stderr.write(\`\${error.message}\\n\`);
+    process.stderr.write(`${error.message}\\n`);
     process.exit(1);
   });
 
