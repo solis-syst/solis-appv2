@@ -374,6 +374,7 @@ Never treat old assumptions from a previous conversation as more authoritative t
 - Added manual workflow dispatch with tag input.
 - Manual releases can create a missing semantic-version tag from `main` and then build that exact tag.
 - Manual releases validate that `package.json` matches the requested tag version.
+- Configured Vite with a relative production asset base so packaged Electron `file://` loading resolves renderer assets correctly.
 - Added this project context file for future AI sessions.
 
 ## Known Limitations
