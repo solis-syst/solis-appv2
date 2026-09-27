@@ -51,10 +51,10 @@ const formatBytes = (bytes) => {
   const mb = bytes / 1024 / 1024;
 
   if (mb < 1024) {
-    return \`\${mb.toFixed(mb < 10 ? 1 : 0)} MB\`;
+    return `${mb.toFixed(mb < 10 ? 1 : 0)} MB`;
   }
 
-  return \`\${(mb / 1024).toFixed(1)} GB\`;
+  return `${(mb / 1024).toFixed(1)} GB`;
 };
 
 const formatRate = (bytesPerSecond) => {
@@ -64,7 +64,7 @@ const formatRate = (bytesPerSecond) => {
 
   const mb = bytesPerSecond / 1024 / 1024;
 
-  return \`\${mb.toFixed(mb < 10 ? 1 : 0)} MB/s\`;
+  return `${mb.toFixed(mb < 10 ? 1 : 0)} MB/s`;
 };
 
 const badgeClass = (tone) => {
@@ -202,7 +202,7 @@ export function UpdaterCard({
             {state.type === "available" && (
               <button
                 type="button"
-                className={\`\${buttonBase} border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-white\`}
+                className={`${buttonBase} border-zinc-700 bg-zinc-100 text-zinc-950 hover:bg-white`}
                 onClick={onDownload}
               >
                 Download update
@@ -212,7 +212,7 @@ export function UpdaterCard({
             {state.type === "downloaded" && (
               <button
                 type="button"
-                className={\`\${buttonBase} border-emerald-400/30 bg-emerald-500 text-zinc-950 hover:bg-emerald-400\`}
+                className={`${buttonBase} border-emerald-400/30 bg-emerald-500 text-zinc-950 hover:bg-emerald-400`}
                 onClick={onInstall}
               >
                 Restart to apply
@@ -224,7 +224,7 @@ export function UpdaterCard({
               !isDownloading && (
                 <button
                   type="button"
-                  className={\`\${buttonBase} border-zinc-700 bg-zinc-950 text-zinc-200 hover:bg-zinc-800\`}
+                  className={`${buttonBase} border-zinc-700 bg-zinc-950 text-zinc-200 hover:bg-zinc-800`}
                   disabled={isChecking || state.type === "development"}
                   onClick={onCheck}
                 >
@@ -239,7 +239,7 @@ export function UpdaterCard({
             {isDownloading && (
               <button
                 type="button"
-                className={\`\${buttonBase} border-zinc-800 bg-zinc-950 text-zinc-400\`}
+                className={`${buttonBase} border-zinc-800 bg-zinc-950 text-zinc-400`}
                 disabled
               >
                 Downloading…
@@ -257,7 +257,7 @@ export function UpdaterCard({
             <div className="mt-4 flex flex-wrap gap-2">
               <button
                 type="button"
-                className={\`\${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200\`}
+                className={`${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200`}
                 onClick={() =>
                   mock("update-available", { version: "1.0.1" })
                 }
@@ -267,7 +267,7 @@ export function UpdaterCard({
 
               <button
                 type="button"
-                className={\`\${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200\`}
+                className={`${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200`}
                 onClick={() =>
                   mock("download-progress", {
                     percent: 47.5,
@@ -282,7 +282,7 @@ export function UpdaterCard({
 
               <button
                 type="button"
-                className={\`\${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200\`}
+                className={`${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200`}
                 onClick={() =>
                   mock("update-downloaded", { version: "1.0.1" })
                 }
@@ -292,7 +292,7 @@ export function UpdaterCard({
 
               <button
                 type="button"
-                className={\`\${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200\`}
+                className={`${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200`}
                 onClick={() =>
                   mock("error", {
                     message: "Mock updater failure."
@@ -304,7 +304,7 @@ export function UpdaterCard({
 
               <button
                 type="button"
-                className={\`\${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200\`}
+                className={`${buttonBase} h-8 border-zinc-800 bg-zinc-950 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200`}
                 onClick={() =>
                   mock("update-not-available", {
                     currentVersion: state.currentVersion,
