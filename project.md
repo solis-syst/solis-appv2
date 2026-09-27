@@ -176,7 +176,9 @@ Example:
 
 `v1.0.0`
 
-The manually selected tag is checked out directly before building.
+For a manual run, the workflow first checks out `main`, validates that `package.json` matches the requested tag version, creates the tag from `main` when the tag does not already exist, and then checks out that exact tag for the matrix build.
+
+If the tag already exists, the workflow reuses it without creating a new tag.
 
 Each release build runs on:
 
@@ -369,7 +371,9 @@ Never treat old assumptions from a previous conversation as more authoritative t
 - Added electron-builder GitHub publishing configuration.
 - Added Windows NSIS, macOS DMG/ZIP, and Linux AppImage targets.
 - Added tag-triggered GitHub Actions release matrix.
-- Added manual workflow dispatch with tag input and exact-tag checkout.
+- Added manual workflow dispatch with tag input.
+- Manual releases can create a missing semantic-version tag from `main` and then build that exact tag.
+- Manual releases validate that `package.json` matches the requested tag version.
 - Added this project context file for future AI sessions.
 
 ## Known Limitations
