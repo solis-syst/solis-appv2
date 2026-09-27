@@ -1,0 +1,9 @@
+{
+  "name": "solis-brevo-backend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Vercel serverless backend for Brevo email delivery",
+  "engines": {
+    "node": ">=18"
+  }
+}
